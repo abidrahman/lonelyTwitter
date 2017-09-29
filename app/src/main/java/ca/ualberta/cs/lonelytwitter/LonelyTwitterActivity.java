@@ -1,3 +1,13 @@
+/**
+ * LonelyTwitterActivity class
+ *
+ * Copyright 2017 Abid Rahman
+ *
+ * @author arahman1
+ * @version 1.0
+ * @created 2017-09-27
+ */
+
 package ca.ualberta.cs.lonelytwitter;
 
 import java.io.BufferedReader;
@@ -25,10 +35,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * Created by abidrahman on 2017-09-14.
+ * LonelyTwitterActivity is the main activity for the Lonely
+ * Twitter app. It is responsible for storing and updating a list
+ * of Tweets in a JSON file format. It also allows the user to type
+ * a new tweet in a text field provided. The saved tweets are loaded
+ * and displayed whenever the LonelyTwitterActivity is active.
  */
-
-
 public class LonelyTwitterActivity extends Activity {
 
 	private static final String FILENAME = "file.sav";
@@ -38,7 +50,12 @@ public class LonelyTwitterActivity extends Activity {
 	private ArrayList<Tweet> tweets;
 	private ArrayAdapter<Tweet> adapter;
 
-	/** Called when the activity is first created. */
+    /**
+     * onCreate links up the UI Controllers with the dataset used.
+     * Also responsible for detecting save and clear button presses
+     * and acts accordingly.
+     * @param savedInstanceState
+     */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -80,6 +97,11 @@ public class LonelyTwitterActivity extends Activity {
 		}));
 	}
 
+    /**
+     * onStart is called whenever the Activity is started,
+     * it fetches the saved Tweets from a file and sets
+     * up the adapter for the list of tweets.
+     */
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
@@ -92,6 +114,10 @@ public class LonelyTwitterActivity extends Activity {
 		oldTweetsList.setAdapter(adapter);
 	}
 
+    /**
+     * Uses a Gson object to load tweets from the saved file
+     * If no file is found, creates a new list of tweets.
+     */
 	private void loadFromFile() {
 		try {
 			FileInputStream fis = openFileInput(FILENAME);
@@ -106,7 +132,11 @@ public class LonelyTwitterActivity extends Activity {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
+    /**
+     * Saves the list of Tweets to a file using a Gson object.
+     * If no file is found, throws runtimeException.
+     */
 	private void saveInFile() {
 		try {
 			FileOutputStream fos = openFileOutput(FILENAME,	Context.MODE_PRIVATE);
